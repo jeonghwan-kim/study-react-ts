@@ -24,7 +24,6 @@ $ npx typescript --init
 ```
 
 
-
 ```json
 { 
   "compilerOptions": { 
