@@ -5,26 +5,72 @@ import Sidebar from '../../components/Sidebar';
 import Main from '../../components/Main';
 import AddMemoBtn from '../../components/AddMenuBtn';
 import MemoRouter from '../../routes/memo';
+import { Memo } from '../../models';
+import { fetchMemoList } from '../../apis';
 
-const MemoPage: React.FC<RouteComponentProps> = (props) => {
-  const { match } = props;
+interface MemoPageState {
+  memos: Memo[];
+}
 
-  return (
-    <Layout>
-      <Sidebar>
-        <Link to="/">뒤로 가기</Link>
-        <h1>메모</h1>
-        <ul>
-          <li><Link to="/memo/1">메모1</Link></li>
-          <li><Link to="/memo/2">메모2</Link></li>
-        </ul>
-      </Sidebar>
-      <Main>
-        {props.location.pathname !== `${match.url}/add` && <AddMemoBtn />}
-        <MemoRouter />
-      </Main>
-    </Layout>
-  );
+class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
+  constructor(props: RouteComponentProps) {
+    super(props);
+    this.state = {
+      memos: []
+    }
+  }
+
+  componentDidMount() {
+    this.fetchData()
+  }
+
+  componentDidUpdate(preProps: RouteComponentProps) {
+    const urlChanged = preProps.location.pathname !== this.props.location.pathname;
+    if (urlChanged) {
+      this.fetchData();
+    }
+  }
+
+  fetchData() {
+    const memos = fetchMemoList();
+    this.setState({ memos });
+  }
+
+  render() {
+    const { match, location } = this.props;
+    const { memos } = this.state;
+    const hasMemos = memos.length > 0;
+
+    return (
+      <Layout>
+        <Sidebar>
+          <Link to="/">뒤로 가기</Link>
+          <h1>메모</h1>
+          {hasMemos && this.renderMemoList(memos)}
+        </Sidebar>
+        <Main>
+          {location.pathname !== `${match.url}/add` && <AddMemoBtn />}
+          <MemoRouter />
+        </Main>
+      </Layout>
+    );
+  }
+
+  renderMemoList(memos: Memo[]) {
+    return (
+      <ul>
+        {memos.map((memo, idx) => 
+          <li key={idx}>
+            <Link to={`/memo/${memo.id}`}>{this.memoTitle(memo.content)}</Link>
+          </li>
+        )}
+      </ul>
+    )
+  }
+
+  memoTitle(content: string): string {
+    return content.substr(0, 15);
+  }
 }
 
 export default MemoPage;
