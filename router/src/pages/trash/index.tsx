@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { Link, Route, RouteComponentProps, Redirect, Switch } from 'react-router-dom';
+import { Link, RouteComponentProps, Redirect } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import Sidebar from '../../components/Sidebar';
 import Main from '../../components/Main';
-import AddMemoBtn from '../../components/AddMenuBtn';
-import MemoRouter from '../../routes/memo';
 import { Memo } from '../../models';
-import { fetchMemoList } from '../../apis';
+import { fetchDeletedMemoList } from '../../apis';
+import TrashRouter from '../../routes/trash';
 
-interface MemoPageState {
+interface TrashPageState {
   memos: Memo[];
 }
 
-class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
+class TrashPage extends React.Component<RouteComponentProps, TrashPageState>  {
   constructor(props: RouteComponentProps) {
     super(props);
 
@@ -33,12 +32,12 @@ class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
   }
 
   fetchData() {
-    const memos = fetchMemoList();
+    const memos = fetchDeletedMemoList();
     this.setState({ memos });
   }
 
   render() {
-    const { match, location } = this.props;
+    const { match } = this.props;
     const { memos } = this.state;
     const hasMemos = memos.length > 0;
 
@@ -50,12 +49,11 @@ class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
       <Layout>
         <Sidebar>
           <Link to="/">뒤로 가기</Link>
-          <h1>메모</h1>
+          <h1>휴지통</h1>
           {hasMemos && this.renderMemoList(memos)}
         </Sidebar>
         <Main>
-          {location.pathname !== `${match.url}/add` && <AddMemoBtn />}
-          <MemoRouter />
+          <TrashRouter />
         </Main>
       </Layout>
     );
@@ -64,7 +62,7 @@ class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
   renderMemoList(memos: Memo[]) {
     return (
       <ul>
-        {memos.map((memo, idx) => 
+        {memos.map((memo, idx) =>
           <li key={idx}>
             <Link to={`/memo/${memo.id}`}>{this.memoTitle(memo.content)}</Link>
           </li>
@@ -78,4 +76,4 @@ class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
   }
 }
 
-export default MemoPage;
+export default TrashPage;

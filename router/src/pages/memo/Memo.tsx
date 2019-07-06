@@ -3,20 +3,20 @@ import { RouteComponentProps, Redirect } from "react-router-dom";
 import { Memo } from '../../models';
 import { fetchMemo, deleteMemo } from '../../apis';
 
-interface ViewMemoMatchProps {
+interface MemoMatchProps {
   id: string;
 }
 
-interface ViewMemoState {
+interface MemoState {
   memo?: Memo;
   deleted: boolean
 }
 
-class ViewMemo extends React.Component<
-  RouteComponentProps<ViewMemoMatchProps>,
-  ViewMemoState
+class MemoComponent extends React.Component<
+  RouteComponentProps<MemoMatchProps>,
+  MemoState
 > {
-  constructor(props: RouteComponentProps<ViewMemoMatchProps>) {
+  constructor(props: RouteComponentProps<MemoMatchProps>) {
     super(props);
 
     this.state = {
@@ -30,7 +30,7 @@ class ViewMemo extends React.Component<
     this.fetchData(params.id);
   }
 
-  componentWillReceiveProps(nextProps: RouteComponentProps<ViewMemoMatchProps>) {
+  componentWillReceiveProps(nextProps: RouteComponentProps<MemoMatchProps>) {
     const { match: { params }} = this.props;
     const id = nextProps.match.params.id;
     const urlChanged = id !== params.id;
@@ -77,4 +77,4 @@ class ViewMemo extends React.Component<
 }
 
 
-export default ViewMemo;
+export default MemoComponent;
