@@ -17,3 +17,11 @@ export const addMemo = (memo: Memo) => {
   store = [ memo, ...store ];
   return memo;
 }
+
+export const fetchMemo = (memoId: number) => {
+  return store.find(m => m.id === memoId);
+}
+
+export const deleteMemo = (memoId: number) => {
+  store = store.filter(m => m.id !== memoId);
+}

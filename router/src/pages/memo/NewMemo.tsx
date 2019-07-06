@@ -3,12 +3,12 @@ import { Link, Redirect } from 'react-router-dom';
 import { addMemo } from '../../apis';
 import { Memo } from '../../models';
 
-interface NewMemoState {
+interface AddMemoState {
   value: string;
   saved: boolean;
 }
 
-class NewMemo extends React.Component<any, NewMemoState> {
+class AddMemo extends React.Component<any, AddMemoState> {
   constructor(props: any) {
     super(props);
 
@@ -66,4 +66,4 @@ class NewMemo extends React.Component<any, NewMemoState> {
   }
 }
 
-export default NewMemo;
+export default AddMemo;
