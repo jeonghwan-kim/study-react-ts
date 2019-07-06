@@ -41,6 +41,10 @@ class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
     const { memos } = this.state;
     const hasMemos = memos.length > 0;
 
+    if (match.isExact && hasMemos) {
+      return <Redirect to={`${match.url}/${memos[0].id}`} />
+    }
+
     return (
       <Layout>
         <Sidebar>
