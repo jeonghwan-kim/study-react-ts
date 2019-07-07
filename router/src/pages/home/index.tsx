@@ -6,6 +6,11 @@ import Main from '../../components/Main';
 import AddMemoBtn from '../../components/AddMenuBtn';
 import { List, ListItem } from '../../components/List';
 
+const style: React.CSSProperties = {
+  textDecoration: 'none',
+  color: '#000',
+}
+
 const HomePage: React.FC = () => {
   return (
     <Layout>

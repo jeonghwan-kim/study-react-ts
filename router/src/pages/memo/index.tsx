@@ -69,11 +69,7 @@ class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
       <List>
         {memos.map((memo, idx) => 
           <ListItem key={idx} first={idx === 0}>
-            <Link to={`/memo/${memo.id}`}
-              style={{
-                textDecoration: 'none',
-                color: '#000'
-              }}>
+            <Link to={`/memo/${memo.id}`}>
               {this.memoTitle(memo.content)}
             </Link>
           </ListItem>

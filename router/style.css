@@ -8,3 +8,13 @@ html, body {
   height: 100%;
 }
 
+ul {
+  list-style: none;
+  margin-left: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
