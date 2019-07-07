@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Link, RouteComponentProps, Redirect } from 'react-router-dom';
 import Layout from '../../components/Layout';
-import Sidebar from '../../components/Sidebar';
+import Sidebar, { SidebarTitle, SidebarBackButton } from '../../components/Sidebar';
 import Main from '../../components/Main';
 import { Memo } from '../../models';
 import { fetchDeletedMemoList } from '../../apis';
 import TrashRouter from '../../routes/trash';
+import { List, ListItem } from '../../components/List';
 
 interface TrashPageState {
   memos: Memo[];
@@ -48,12 +49,14 @@ class TrashPage extends React.Component<RouteComponentProps, TrashPageState>  {
     return (
       <Layout>
         <Sidebar>
-          <Link to="/">뒤로 가기</Link>
-          <h1>휴지통</h1>
+          <SidebarBackButton to="/" />
+          <SidebarTitle>휴지통</SidebarTitle>
           {hasMemos && this.renderMemoList(memos)}
         </Sidebar>
         <Main>
-          <TrashRouter />
+          <div style={{ margin: '10px' }}>
+            <TrashRouter />
+          </div>
         </Main>
       </Layout>
     );
@@ -61,13 +64,15 @@ class TrashPage extends React.Component<RouteComponentProps, TrashPageState>  {
 
   renderMemoList(memos: Memo[]) {
     return (
-      <ul>
+      <List>
         {memos.map((memo, idx) =>
-          <li key={idx}>
-            <Link to={`/memo/${memo.id}`}>{this.memoTitle(memo.content)}</Link>
-          </li>
+        <ListItem key={idx} first={idx === 0}>
+          <Link to={`/memo/${memo.id}`}>
+            {this.memoTitle(memo.content)}
+          </Link>
+        </ListItem>
         )}
-      </ul>
+      </List>
     )
   }
 

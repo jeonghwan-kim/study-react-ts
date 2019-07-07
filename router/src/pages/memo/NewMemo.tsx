@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { addMemo } from '../../apis';
 import { Memo } from '../../models';
+import Button from '../../components/Button';
 
 interface AddMemoState {
   value: string;
@@ -55,12 +56,19 @@ class AddMemo extends React.Component<any, AddMemoState> {
       <React.Fragment>
         <form>
           <textarea 
+            style={{
+              width: '97%',
+              height: '100px',
+              borderRadius: '4px',
+              border: '1px solid #ccc',
+              padding: '10px',
+            }}
             placeholder="여기에 메모를 입력하세요" 
             onChange={this.handleChange}
             value={value} />
         </form>
-        <Link to="/memo">취소</Link>
-        <button onClick={this.handleClickSave}>저장</button>
+        <Button to="/memo">취소</Button>
+        <Button onClick={this.handleClickSave}>저장</Button>
       </React.Fragment>
     )
   }

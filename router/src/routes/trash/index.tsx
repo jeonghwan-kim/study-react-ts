@@ -7,8 +7,8 @@ const TrashRouter: React.FC<RouteComponentProps> = props => {
 
   return (
     <Switch>
-      <Route path={`${match.url}/:id`} component={RemovedMemo} />
-      <Redirect path={`${match.url}/*`} to={`${match.url}`} />
+      <Route path={`${match.url}/:id`} exact component={RemovedMemo} />
+      <Route path={`${match.url}/`} exact component={() => <div>휴지통이 비었습니다.</div>} />
     </Switch>
   )
 }

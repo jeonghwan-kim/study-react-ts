@@ -1,22 +1,29 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../../components/Layout';
-import Sidebar from '../../components/Sidebar';
+import Sidebar, { SidebarTitle } from '../../components/Sidebar';
 import Main from '../../components/Main';
 import AddMemoBtn from '../../components/AddMenuBtn';
+import { List, ListItem } from '../../components/List';
 
 const HomePage: React.FC = () => {
   return (
     <Layout>
       <Sidebar>
-        <h1>폴더</h1>
-        <ul>
-          <li><Link to="/memo">메모</Link></li>
-          <li><Link to="/trash">휴지통</Link></li>
-        </ul>
+        <SidebarTitle>폴더</SidebarTitle>
+        <List>
+          <ListItem first>
+            <Link to="/memo">메모</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/trash">휴지통</Link>
+          </ListItem>
+        </List>
       </Sidebar>
       <Main>
-        <AddMemoBtn />
+        <div style={{
+          margin: '10px'
+        }}><AddMemoBtn /></div>
       </Main>
     </Layout>
   );

@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Link, Route, RouteComponentProps, Redirect, Switch } from 'react-router-dom';
 import Layout from '../../components/Layout';
-import Sidebar from '../../components/Sidebar';
+import Sidebar, { SidebarTitle, SidebarBackButton } from '../../components/Sidebar';
 import Main from '../../components/Main';
 import AddMemoBtn from '../../components/AddMenuBtn';
 import MemoRouter from '../../routes/memo';
 import { Memo } from '../../models';
 import { fetchMemoList } from '../../apis';
+import { List, ListItem } from '../../components/List';
 
 interface MemoPageState {
   memos: Memo[];
@@ -49,13 +50,15 @@ class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
     return (
       <Layout>
         <Sidebar>
-          <Link to="/">뒤로 가기</Link>
-          <h1>메모</h1>
+          <SidebarBackButton to="/" />
+          <SidebarTitle>메모</SidebarTitle>
           {hasMemos && this.renderMemoList(memos)}
         </Sidebar>
         <Main>
-          {location.pathname !== `${match.url}/add` && <AddMemoBtn />}
-          <MemoRouter />
+          <div style={{ margin: '10px' }}>
+            {location.pathname !== `${match.url}/add` && <AddMemoBtn />}
+            <MemoRouter />
+          </div>
         </Main>
       </Layout>
     );
@@ -63,13 +66,19 @@ class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
 
   renderMemoList(memos: Memo[]) {
     return (
-      <ul>
+      <List>
         {memos.map((memo, idx) => 
-          <li key={idx}>
-            <Link to={`/memo/${memo.id}`}>{this.memoTitle(memo.content)}</Link>
-          </li>
+          <ListItem key={idx} first={idx === 0}>
+            <Link to={`/memo/${memo.id}`}
+              style={{
+                textDecoration: 'none',
+                color: '#000'
+              }}>
+              {this.memoTitle(memo.content)}
+            </Link>
+          </ListItem>
         )}
-      </ul>
+      </List>
     )
   }
 

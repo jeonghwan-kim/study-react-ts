@@ -2,6 +2,8 @@ import * as React from 'react';
 import { RouteComponentProps, Redirect } from "react-router-dom";
 import { Memo } from '../../models';
 import { fetchMemo, deleteMemo, resotreMemo } from '../../apis';
+import Button from '../../components/Button';
+import DateString from '../../components/DateString';
 
 interface RemovedMemoMatchProps {
   id: string;
@@ -68,9 +70,16 @@ class RemovedMemo extends React.Component<
     
     return (
       <React.Fragment>
-        <button onClick={this.onRestore}>복구</button>
-        <div>{memo.createdAt}</div>
-        <div>{memo.content}</div>
+        <Button onClick={this.onRestore}>복구</Button>
+        <div style={{
+          borderTop: '1px solid #ddd',
+          paddingTop: '10px',
+        }}>
+          <div style={{ 
+              marginBottom: '15px'
+            }}>{memo.createdAt && <DateString timestamp={memo.createdAt} />}</div>
+          <div>{memo.content}</div>
+        </div>
       </React.Fragment>
 
     );
