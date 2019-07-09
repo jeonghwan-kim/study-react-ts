@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, Route, RouteComponentProps, Redirect, Switch } from 'react-router-dom';
+import { Link, Route, RouteComponentProps, Redirect, Switch, withRouter } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import Sidebar, { SidebarTitle, SidebarBackButton } from '../../components/Sidebar';
 import Main from '../../components/Main';
@@ -9,38 +9,20 @@ import { Memo } from '../../models';
 import { fetchMemoList } from '../../apis';
 import { List, ListItem } from '../../components/List';
 
-interface MemoPageState {
+interface MemoPageProps {
   memos: Memo[];
 }
 
-class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
-  constructor(props: RouteComponentProps) {
-    super(props);
-
-    this.state = {
-      memos: []
-    }
-  }
-
-  componentDidMount() {
-    this.fetchData()
-  }
-
-  componentWillReceiveProps(preProps: RouteComponentProps) {
-    const urlChanged = preProps.location.pathname !== this.props.location.pathname;
-    if (urlChanged) {
-      this.fetchData();
-    }
-  }
-
-  fetchData() {
-    const memos = fetchMemoList();
-    this.setState({ memos });
-  }
+class MemoPage extends React.Component<RouteComponentProps & MemoPageProps> {
+  // componentWillReceiveProps(preProps: RouteComponentProps) {
+  //   const urlChanged = preProps.location.pathname !== this.props.location.pathname;
+  //   if (urlChanged) {
+  //     this.fetchData();
+  //   }
+  // }
 
   render() {
-    const { match, location } = this.props;
-    const { memos } = this.state;
+    const { match, location, memos } = this.props;
     const hasMemos = memos.length > 0;
 
     if (match.isExact && hasMemos) {
@@ -87,4 +69,4 @@ class MemoPage extends React.Component<RouteComponentProps, MemoPageState> {
   }
 }
 
-export default MemoPage;
+export default withRouter(MemoPage);
