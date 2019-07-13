@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Link, Route, RouteComponentProps, Redirect, Switch, withRouter } from 'react-router-dom';
+import { Link, RouteComponentProps, Redirect, withRouter } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import Sidebar, { SidebarTitle, SidebarBackButton } from '../../components/Sidebar';
 import Main from '../../components/Main';
 import AddMemoBtn from '../../components/AddMenuBtn';
 import MemoRouter from '../../routes/memo';
 import { Memo } from '../../models';
-import { fetchMemoList } from '../../apis';
 import { List, ListItem } from '../../components/List';
 
 interface MemoPageProps {

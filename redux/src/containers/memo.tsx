@@ -1,20 +1,22 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {FetchMemoListAction, fetchMemoList, AppState} from '../index'
 import { Memo } from '../models';
 import MemoPage from '../pages/memo';
 import * as api from '../apis';
 import { Dispatch, bindActionCreators } from 'redux';
+import { FetchMemoListAction, fetchMemoList } from '../actions';
+import { RootState } from '../reducers';
 
-interface MemoContainerProps {
+interface Props {
   memos: Memo[]
   fetchMemoList(memos: Memo[]): FetchMemoListAction
 }
 
-class MemoContainer extends React.PureComponent<MemoContainerProps> {
+class MemoContainer extends React.PureComponent<Props> {
   componentDidMount() {
+    const {fetchMemoList} = this.props;
     const momos = api.fetchMemoList()
-    this.props.fetchMemoList(momos)
+    fetchMemoList(momos)
   }
 
   render() {
@@ -22,12 +24,10 @@ class MemoContainer extends React.PureComponent<MemoContainerProps> {
   }
 }
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: RootState) => ({
   memos: state.memo.memos
 })
 
-// TODO Dispatch<T> T를 찾아야 함
-// 참고: https://github.com/piotrwitek/react-redux-typescript-guide
 const mapDispatchToProps = (dispatch: Dispatch) => 
   bindActionCreators({
     fetchMemoList

@@ -22,6 +22,9 @@
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
+    "@types/redux-logger": "^3.0.7",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.2",
     "webpack": "^4.35.0",
