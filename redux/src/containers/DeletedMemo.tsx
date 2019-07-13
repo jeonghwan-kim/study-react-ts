@@ -4,54 +4,54 @@ import { Memo } from '../models';
 import * as api from '../apis';
 import { Dispatch, bindActionCreators } from 'redux';
 import { 
-  FetchMemoAction, fetchMemo, 
-  deleteMemo, DeleteMemoAction
+  fetchDeletedMemo, FetchDeletedMemoAction, 
+  restoreMemo, RestoreMemoAction
 } from '../actions';
 import { RootState } from '../reducers';
 import { RouteComponentProps, Redirect } from 'react-router';
-import MemoPage from '../pages/memo/Memo';
+import DeletedMemo from '../pages/trash/DeletedMemo';
 
 interface MatchProps {
   id: string;
 }
 
 interface Props {
-  memos: Memo[]
-  fetchMemo(memos: Memo): FetchMemoAction
-  deleteMemo(id: number): DeleteMemoAction
+  memo?: Memo
+  fetchDeletedMemo(memo: Memo): FetchDeletedMemoAction
+  restoreMemo(id: number): RestoreMemoAction
 }
 
 interface State {
-  isMemoDeleted: boolean
+  restored: boolean
 }
 
-class MemoContainer 
+class DeletedMemoContainer 
 extends React.Component<Props & RouteComponentProps<MatchProps>, State> {
   readonly state = {
-    isMemoDeleted: false
+    restored: false
   }
 
   componentWillMount() {
-    const {fetchMemo, match: {params: {id}}} = this.props;
+    const {fetchDeletedMemo, match: {params: {id}}} = this.props;
     const memo = api.fetchMemo(parseInt(id, 10))
-    if (memo) fetchMemo(memo)
+    if (memo) fetchDeletedMemo(memo)
   }
   
-  onDeleteMemo = (id: number) => {
-    const {deleteMemo} = this.props;
-    api.deleteMemo(id)
-    deleteMemo(id)
-    this.setState({ isMemoDeleted: true })
+  onRestore = (id: number) => {
+    const {restoreMemo} = this.props;
+    api.resotreMemo(id)
+    restoreMemo(id)
+    this.setState({ restored: true })
   }
 
   render() {
-    const {isMemoDeleted} = this.state
-    if (isMemoDeleted) return <Redirect to="/memo" />
+    const {restored} = this.state
+    if (restored) return <Redirect to="/trash" />
     
     return (
-      <MemoPage 
+      <DeletedMemo 
         {...this.props} 
-        onDeleteMemo={this.onDeleteMemo} />
+        onRestore={this.onRestore} />
     )
   }
 }
@@ -61,17 +61,17 @@ const mapStateToProps =
   const memoId = parseInt(props.match.params.id, 10)
 
   return {
-    memo: state.memo.memos.find(memo => memo.id == memoId) 
+    memo: state.memo.deletedMemos.find(memo => memo.id == memoId) 
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => 
   bindActionCreators({
-    fetchMemo,
-    deleteMemo,
+    fetchDeletedMemo,
+    restoreMemo,
   }, dispatch)
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MemoContainer)
+)(DeletedMemoContainer)

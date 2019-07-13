@@ -1,22 +1,18 @@
 import * as React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { addMemo } from '../../apis';
 import { Memo } from '../../models';
 import Button from '../../components/Button';
 
-interface AddMemoState {
-  value: string;
-  saved: boolean;
+interface Props {
+  onSubmit(memo: Memo): void;
 }
 
-class AddMemo extends React.Component<any, AddMemoState> {
-  constructor(props: any) {
-    super(props);
+interface State {
+  value: string
+}
 
-    this.state = {
-      value: '',
-      saved: false,
-    }
+class AddMemoPage extends React.Component<Props, State> {
+  readonly state = {
+    value: '',
   }
 
   handleChange = (evt: React.FormEvent<HTMLTextAreaElement>) => {
@@ -25,33 +21,17 @@ class AddMemo extends React.Component<any, AddMemoState> {
   }
 
   handleClickSave = () => {
+    const { onSubmit } = this.props;
     const {value} = this.state;
     const content = value.trim();
-    if (!content) {
-      return;
-    }
+    if (!content) return;
 
-    this.saveMemo({ content })
-    this.redirectToMemo()
-  }
-
-  saveMemo(memo: Memo): Memo {
-    return addMemo(memo)
-  }
-
-  redirectToMemo() {
-    this.setState({
-      saved: true,
-    });
+    onSubmit({ content })
   }
 
   render() {
-    const {value, saved} = this.state;
+    const {value} = this.state;
     
-    if (saved) {
-      return <Redirect to={`/memo`} />
-    }
-
     return (
       <React.Fragment>
         <form>
@@ -74,4 +54,4 @@ class AddMemo extends React.Component<any, AddMemoState> {
   }
 }
 
-export default AddMemo;
+export default AddMemoPage;
