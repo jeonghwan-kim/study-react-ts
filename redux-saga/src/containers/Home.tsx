@@ -5,7 +5,7 @@ import { Dispatch, bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Memo } from '../models';
 import { 
-  fetchMemoList, FetchMemoListAction,
+  fetchMemoList, FetchMemoListRequestAction,
   fetchDeletedMemoList, FetchDeletedMemoListAction,
 } from '../actions';
 import * as api from '../apis'
@@ -13,7 +13,7 @@ import * as api from '../apis'
 interface Props {
   memos: Memo[] 
   deletedMemos: Memo[] 
-  fetchMemoList(memos: Memo[]): FetchMemoListAction
+  fetchMemoList(): FetchMemoListRequestAction
   fetchDeletedMemoList(memos: Memo[]): FetchDeletedMemoListAction
 }
 
@@ -21,10 +21,9 @@ class HomeContainer extends React.Component<Props> {
   componentDidMount() {
     const { fetchMemoList, fetchDeletedMemoList } = this.props
     
-    const memos = api.fetchMemoList();
     const deletedMemos = api.fetchDeletedMemoList();
 
-    fetchMemoList(memos)
+    fetchMemoList()
     fetchDeletedMemoList(deletedMemos)
   }
 

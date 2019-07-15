@@ -4,7 +4,7 @@ import { Memo } from '../models';
 import MemoListPage from '../pages/memo/MemoList';
 import * as api from '../apis';
 import { Dispatch, bindActionCreators } from 'redux';
-import { FetchMemoListAction, fetchMemoList } from '../actions';
+import { FetchMemoListRequestAction, fetchMemoList } from '../actions';
 import { RootState } from '../reducers';
 import { RouteComponentProps, Redirect } from 'react-router';
 
@@ -14,15 +14,14 @@ interface MatchProps {
 
 interface Props {
   memos: Memo[]
-  fetchMemoList(memos: Memo[]): FetchMemoListAction
+  fetchMemoList(): FetchMemoListRequestAction
 }
 
 class MemoListContainer 
 extends React.Component<Props & RouteComponentProps<MatchProps>> {
   componentWillMount() {
     const {fetchMemoList} = this.props;
-    const memos = api.fetchMemoList()
-    fetchMemoList(memos)
+    fetchMemoList()
   }
 
   render() {

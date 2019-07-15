@@ -14,10 +14,12 @@ const initialState: MemoState = {
 
 const memoReducer = (state = initialState, action: MemoActionTypes): MemoState => {
   switch (action.type) {
-    case types.FETCH_MEMO_LIST: 
+    case types.FETCH_MEMO_LIST_SUCCESS:
       return {
         ...state,
-        memos: action.payload
+        memos: action.payload.map(memo => ({
+          ...memo
+        }))
       }
     case types.FETCH_DELETED_MEMO_LIST:
       return {

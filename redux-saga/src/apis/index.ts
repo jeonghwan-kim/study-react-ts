@@ -5,9 +5,13 @@ let store: Memo[] = [
   { id: 1, content: '첫번재 메모입니다.', createdAt: Date.now() - 1 },
 ]
 
-export const fetchMemoList = () => 
-  store.filter(memo => !memo.deleted)
+export const fetchMemoList = () => new Promise(resolve => {
+  const memoList = store.filter(memo => !memo.deleted)
     .sort((a, b) => b.createdAt! - a.createdAt!);
+
+  setTimeout(()=> resolve(memoList), 1000)
+})
+  
 
 export const fetchDeletedMemoList = () => 
   store.filter(memo => !!memo.deleted)

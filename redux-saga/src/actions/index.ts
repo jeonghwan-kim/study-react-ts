@@ -1,14 +1,22 @@
 import * as types from './types';
 import {Memo} from '../models'
 
-export interface FetchMemoListAction {
-  type: typeof types.FETCH_MEMO_LIST
+export interface FetchMemoListRequestAction {
+  type: typeof types.FETCH_MEMO_LIST_REQUEST
+}
+
+export interface FetchMemoListSuccessAction {
+  type: typeof types.FETCH_MEMO_LIST_SUCCESS
   payload: Memo[]
 }
 
-export const fetchMemoList = (memos: Memo[]): FetchMemoListAction => ({
-  type: types.FETCH_MEMO_LIST,
-  payload: memos
+export interface FetchMemoListFailureAction {
+  type: typeof types.FETCH_MEMO_LIST_FAILURE,
+  payload: any
+}
+
+export const fetchMemoList = (): FetchMemoListRequestAction => ({
+  type: types.FETCH_MEMO_LIST_REQUEST,
 })
 
 export interface FetchMemoAction {
@@ -72,7 +80,9 @@ export const restoreMemo = (id: number): RestoreMemoAction => ({
 })
 
 
-export type MemoActionTypes = FetchMemoListAction 
+export type MemoActionTypes = FetchMemoListRequestAction 
+  | FetchMemoListSuccessAction
+  | FetchMemoListFailureAction
   | FetchDeletedMemoListAction
   | FetchDeletedMemoAction
   | FetchMemoAction
