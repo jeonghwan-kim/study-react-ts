@@ -17,37 +17,26 @@ interface MatchProps {
 
 interface Props {
   memo?: Memo
-  fetchDeletedMemo(memo: Memo): FetchDeletedMemoAction
+  fetchDeletedMemo(id: number): FetchDeletedMemoAction
   restoreMemo(id: number): RestoreMemoAction
 }
 
-interface State {
-  restored: boolean
-}
-
 class DeletedMemoContainer 
-extends React.Component<Props & RouteComponentProps<MatchProps>, State> {
-  readonly state = {
-    restored: false
-  }
-
+extends React.Component<Props & RouteComponentProps<MatchProps>, {}> {
   componentWillMount() {
     const {fetchDeletedMemo, match: {params: {id}}} = this.props;
-    const memo = api.fetchMemo(parseInt(id, 10))
-    if (memo) fetchDeletedMemo(memo)
+    const memoId = parseInt(id, 10)
+    if (!isNaN(memoId)) {
+      fetchDeletedMemo(memoId)
+    }
   }
   
   onRestore = (id: number) => {
     const {restoreMemo} = this.props;
-    api.resotreMemo(id)
     restoreMemo(id)
-    this.setState({ restored: true })
   }
 
   render() {
-    const {restored} = this.state
-    if (restored) return <Redirect to="/trash" />
-    
     return (
       <DeletedMemo 
         {...this.props} 

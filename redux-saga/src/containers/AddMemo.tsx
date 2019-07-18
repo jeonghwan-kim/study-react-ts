@@ -12,7 +12,6 @@ interface Props {
 }
 
 interface State {
-  newMemoId: number
 }
 
 class AddMemoContainer extends React.Component<Props, State> {
@@ -22,17 +21,10 @@ class AddMemoContainer extends React.Component<Props, State> {
 
   handleSubmit = (memo: Memo) => {
     const {addMemo} = this.props;
-
-    const newMemo = api.addMemo(memo)
-    addMemo(newMemo)
-
-    this.setState({ newMemoId: newMemo.id!})
+    addMemo(memo)
   }
 
   render() {
-    const {newMemoId} = this.state
-    if (newMemoId > 0) return <Redirect to={`/memo/${newMemoId}`} />
-    
     return <AddMemoPage onSubmit={this.handleSubmit} />
   }
 }

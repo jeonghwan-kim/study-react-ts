@@ -8,23 +8,19 @@ import {
   fetchMemoList, FetchMemoListRequestAction,
   fetchDeletedMemoList, FetchDeletedMemoListAction,
 } from '../actions';
-import * as api from '../apis'
 
 interface Props {
   memos: Memo[] 
   deletedMemos: Memo[] 
   fetchMemoList(): FetchMemoListRequestAction
-  fetchDeletedMemoList(memos: Memo[]): FetchDeletedMemoListAction
+  fetchDeletedMemoList(): FetchDeletedMemoListAction
 }
 
 class HomeContainer extends React.Component<Props> {
   componentDidMount() {
     const { fetchMemoList, fetchDeletedMemoList } = this.props
-    
-    const deletedMemos = api.fetchDeletedMemoList();
-
     fetchMemoList()
-    fetchDeletedMemoList(deletedMemos)
+    fetchDeletedMemoList()
   }
 
   render() {

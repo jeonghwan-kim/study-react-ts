@@ -17,37 +17,27 @@ interface MatchProps {
 
 interface Props {
   memos: Memo[]
-  fetchMemo(memos: Memo): FetchMemoAction
+  fetchMemo(id: number): FetchMemoAction
   deleteMemo(id: number): DeleteMemoAction
 }
 
-interface State {
-  isMemoDeleted: boolean
-}
-
 class MemoContainer 
-extends React.Component<Props & RouteComponentProps<MatchProps>, State> {
-  readonly state = {
-    isMemoDeleted: false
-  }
+extends React.Component<Props & RouteComponentProps<MatchProps>, {}> {
 
   componentWillMount() {
     const {fetchMemo, match: {params: {id}}} = this.props;
-    const memo = api.fetchMemo(parseInt(id, 10))
-    if (memo) fetchMemo(memo)
+    const memoId = parseInt(id, 10)
+    if (!isNaN(memoId)) {
+      fetchMemo(memoId)
+    }
   }
   
   onDeleteMemo = (id: number) => {
     const {deleteMemo} = this.props;
-    api.deleteMemo(id)
     deleteMemo(id)
-    this.setState({ isMemoDeleted: true })
   }
 
   render() {
-    const {isMemoDeleted} = this.state
-    if (isMemoDeleted) return <Redirect to="/memo" />
-    
     return (
       <MemoPage 
         {...this.props} 

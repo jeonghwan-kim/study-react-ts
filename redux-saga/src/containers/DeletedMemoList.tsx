@@ -14,15 +14,14 @@ interface MatchProps {
 
 interface Props {
   memos: Memo[]
-  fetchDeletedMemoList(memos: Memo[]): FetchDeletedMemoListAction
+  fetchDeletedMemoList(): FetchDeletedMemoListAction
 }
 
 class DeletedMemoListContainer 
 extends React.Component<Props & RouteComponentProps<MatchProps>> {
   componentWillMount() {
     const {fetchDeletedMemoList} = this.props;
-    const momos = api.fetchDeletedMemoList()
-    fetchDeletedMemoList(momos)
+    fetchDeletedMemoList()
   }
   
   render() {
