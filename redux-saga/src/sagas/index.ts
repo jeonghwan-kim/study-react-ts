@@ -23,6 +23,7 @@ import {
   RESTORE_MEMO_FAILURE
  } from '../actions/types';
 import { FetchMemoAction, FetchDeletedMemoAction, AddMemoAction, DeleteMemoAction, RestoreMemoAction } from '../actions';
+import { push } from 'connected-react-router';
 
 function* rootSaga() {
   yield takeEvery(FETCH_MEMO_LIST_REQUEST, fetchMemoList$)
@@ -106,13 +107,8 @@ function* addMemo$(action: AddMemoAction) {
 
   try {
     const memo = yield call(api.addMemo, payload)
-    yield put({
-      type: ADD_MEMO_SUCCESS,
-      payload: memo
-    })
-
-    // TODO 이펙트 처리로 하자 
-    history.pushState({}, '', `/memo/${memo.id}` )
+    yield put({ type: ADD_MEMO_SUCCESS, payload: memo })
+    yield put(push(`/memo/${memo.id}`))
   } catch (err) {
     yield put({
       type: ADD_MEMO_FAILURE,
