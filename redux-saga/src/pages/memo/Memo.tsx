@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Memo } from '../../models';
+import Skelton from '../../components/Skelton';
 import Button from '../../components/Button';
 import DateString from '../../components/DateString';
 
@@ -14,17 +15,17 @@ const MemoPage: React.FC<Props> = props => {
 
   return (
     <React.Fragment>
-      {!memo && apiCalling && <MemoPageLayout> 로딩중...</MemoPageLayout>}
-      {memo && 
-        <React.Fragment>
-          <Button onClick={() => onDeleteMemo(memo.id!)}>삭제</Button>
-          <MemoPageLayout>
-            {memo.createdAt && <DateString timestamp={memo.createdAt} />}
-            <div>
-              {memo.content}
-            </div>
-          </MemoPageLayout>
-        </React.Fragment>
+      {memo 
+        ? <React.Fragment>
+            <Button onClick={() => onDeleteMemo(memo.id!)}>삭제</Button>
+            <MemoPageLayout>
+              {memo.createdAt && <DateString timestamp={memo.createdAt} />}
+              <div>
+                {memo.content}
+              </div>
+            </MemoPageLayout>
+          </React.Fragment>
+        : apiCalling && <MemoPageLayout><Skelton /></MemoPageLayout>
       }
     </React.Fragment>
   );
@@ -46,3 +47,4 @@ const MemoPageLayout: React.FC = ({children}) => {
     </div>
   )
 }
+

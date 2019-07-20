@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import Sidebar, { SidebarTitle, SidebarBackButton } from '../../components/Sidebar';
+import Skelton from '../../components/Skelton';
 import Main from '../../components/Main';
 import AddMemoBtn from '../../components/AddMenuBtn';
 import MemoRouter from '../../routes/memo';
@@ -25,7 +26,7 @@ const MemoListPage: React.FC<Props> = props => {
         <SidebarTitle>메모</SidebarTitle>
         {hasMemos 
           ? <MemoList {...props} />
-          : apiCalling && '로딩중...'}
+          : apiCalling && <Skelton style={{margin: '10px'}} />}
       </Sidebar>
       <Main>
         <div style={{ margin: '10px' }}>

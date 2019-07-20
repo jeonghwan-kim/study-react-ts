@@ -2,7 +2,6 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import { Memo } from '../models';
 import MemoListPage from '../pages/memo/MemoList';
-import * as api from '../apis';
 import { Dispatch, bindActionCreators } from 'redux';
 import { FetchMemoListRequestAction, fetchMemoList } from '../actions';
 import { RootState } from '../reducers';
@@ -20,7 +19,7 @@ interface Props {
 
 class MemoListContainer 
 extends React.Component<Props & RouteComponentProps<MatchProps>> {
-  componentWillMount() {
+  componentDidMount() {
     const {fetchMemoList} = this.props;
     fetchMemoList()
   }

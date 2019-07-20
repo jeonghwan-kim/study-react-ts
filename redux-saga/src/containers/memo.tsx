@@ -25,7 +25,7 @@ interface Props {
 class MemoContainer 
 extends React.Component<Props & RouteComponentProps<MatchProps>, {}> {
 
-  componentWillMount() {
+  componentDidMount() {
     const {fetchMemo, match: {params: {id}}} = this.props;
     const memoId = parseInt(id, 10)
     if (!isNaN(memoId)) {
