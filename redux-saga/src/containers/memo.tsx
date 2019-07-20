@@ -16,6 +16,7 @@ interface MatchProps {
 }
 
 interface Props {
+  apiCalling: boolean
   memos: Memo[]
   fetchMemo(id: number): FetchMemoAction
   deleteMemo(id: number): DeleteMemoAction
@@ -51,7 +52,8 @@ const mapStateToProps =
   const memoId = parseInt(props.match.params.id, 10)
 
   return {
-    memo: state.memo.memos.find(memo => memo.id == memoId) 
+    memo: state.memo.memos.find(memo => memo.id == memoId),
+    apiCalling: state.app.apiCalling,
   }
 }
 

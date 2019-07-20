@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, RouteComponentProps, Redirect, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import Sidebar, { SidebarTitle, SidebarBackButton } from '../../components/Sidebar';
 import Main from '../../components/Main';
@@ -9,12 +9,13 @@ import { Memo } from '../../models';
 import { List, ListItem } from '../../components/List';
 
 interface Props {
-  memos: Memo[];
-  hasAddMemoBtn: boolean;
+  memos: Memo[]
+  hasAddMemoBtn: boolean
+  apiCalling: boolean
 }
 
 const MemoListPage: React.FC<Props> = props => {
-  const { memos, hasAddMemoBtn } = props;
+  const { memos, apiCalling, hasAddMemoBtn } = props;
   const hasMemos = memos.length > 0;
 
   return (
@@ -22,7 +23,9 @@ const MemoListPage: React.FC<Props> = props => {
       <Sidebar>
         <SidebarBackButton to="/" />
         <SidebarTitle>메모</SidebarTitle>
-        {hasMemos && <MemoList {...props}/>}
+        {hasMemos 
+          ? <MemoList {...props} />
+          : apiCalling && '로딩중...'}
       </Sidebar>
       <Main>
         <div style={{ margin: '10px' }}>

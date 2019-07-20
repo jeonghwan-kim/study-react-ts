@@ -14,6 +14,7 @@ interface MatchProps {
 
 interface Props {
   memos: Memo[]
+  apiCalling: boolean
   fetchMemoList(): FetchMemoListRequestAction
 }
 
@@ -38,7 +39,8 @@ extends React.Component<Props & RouteComponentProps<MatchProps>> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  memos: state.memo.memos
+  memos: state.memo.memos,
+  apiCalling: state.app.apiCalling
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => 

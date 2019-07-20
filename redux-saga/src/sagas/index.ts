@@ -20,7 +20,8 @@ import {
   DELETE_MEMO_FAILURE,
   RESTORE_MEMO_REQUEST,
   RESTORE_MEMO_SUCCESS,
-  RESTORE_MEMO_FAILURE
+  RESTORE_MEMO_FAILURE,
+  CLEAR_API_CALL_STATUS
  } from '../actions/types';
 import { FetchMemoAction, FetchDeletedMemoAction, AddMemoAction, DeleteMemoAction, RestoreMemoAction } from '../actions';
 import { push } from 'connected-react-router';
@@ -38,30 +39,20 @@ function* rootSaga() {
 function* fetchMemoList$() {
   try {
     const memos = yield call(api.fetchMemoList)
-    yield put({ 
-      type: FETCH_MEMO_LIST_SUCCESS,
-      payload: memos
-    })
+    yield put({ type: FETCH_MEMO_LIST_SUCCESS, payload: memos })
   } catch (err) {
-    yield put({
-      type: FETCH_MEMO_LIST_FAILURE,
-      payload: err
-    })
+    yield put({ type: FETCH_MEMO_LIST_FAILURE, payload: err })
+  } finally {
+    yield put({ type: CLEAR_API_CALL_STATUS })
   }
 }
 
 function* fetchDeletedMemoList$() {
   try {
     const memos = yield call(api.fetchDeletedMemoList)
-    yield put({
-      type: FETCH_DELETED_MEMO_LIST_SUCCESS,
-      payload: memos
-    })
+    yield put({ type: FETCH_DELETED_MEMO_LIST_SUCCESS, payload: memos })
   } catch (err) {
-    yield put({
-      type: FETCH_MEMO_LIST_FAILURE,
-      payload: err
-    })
+    yield put({ type: FETCH_MEMO_LIST_FAILURE, payload: err })
   }
 }
 
@@ -71,15 +62,9 @@ function* fetchMemo$(action: FetchMemoAction) {
 
   try {
     const memo = yield call(api.fetchMemo, payload)
-    yield  put({
-      type: FETCH_MEMO_SUCCESS,
-      payload: memo
-    })
+    yield  put({ type: FETCH_MEMO_SUCCESS, payload: memo })
   } catch (err) {
-    yield put({
-      type: FETCH_MEMO_FAILURE,
-      payload: err
-    })
+    yield put({ type: FETCH_MEMO_FAILURE, payload: err })
   }
 }
 
@@ -89,15 +74,9 @@ function* fetchDeletedMemo$(action: FetchDeletedMemoAction) {
 
   try {
     const memo = yield call(api.fetchMemo, payload)
-    yield put({
-      type: FETCH_DELETED_MEMO_SUCCESS,
-      payload: memo
-    })
+    yield put({ type: FETCH_DELETED_MEMO_SUCCESS, payload: memo })
   } catch (err) {
-    yield put({
-      type: FETCH_DELETED_MEMO_FAILURE,
-      payload: err
-    })
+    yield put({ type: FETCH_DELETED_MEMO_FAILURE, payload: err })
   }
 }
 
