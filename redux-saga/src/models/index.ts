@@ -4,3 +4,8 @@ export interface Memo {
   createdAt?: number;
   deleted?: boolean;
 }
+
+export interface Toast {
+  id: number;
+  text: string;
+}

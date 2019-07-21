@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ToastList from '../containers/ToastList'
 
 const style: React.CSSProperties = {
   display: 'flex',
@@ -8,9 +9,12 @@ const style: React.CSSProperties = {
 
 const Layout: React.FC = (props) => {
   return (
-    <div style={style}>
-      {props.children}
-    </div>
+    <React.Fragment>
+      <ToastList />
+      <div style={style}>
+        {props.children}
+      </div>
+    </React.Fragment>
   )
 }
 

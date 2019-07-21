@@ -1,4 +1,4 @@
-import { takeLatest, all, call, put } from 'redux-saga/effects'
+import { takeLatest, all, call, put, delay } from 'redux-saga/effects'
 import * as api from '../apis'
 import {
   FETCH_MEMO_LIST_REQUEST,
@@ -21,7 +21,7 @@ import {
   RESTORE_MEMO_REQUEST,
   RESTORE_MEMO_SUCCESS,
   RESTORE_MEMO_FAILURE,
-  CLEAR_API_CALL_STATUS
+  CLEAR_API_CALL_STATUS,
 } from '../actions/types';
 import {
   FetchMemoAction,
@@ -50,7 +50,7 @@ function* fetchMemoList$() {
     const memos = yield call(api.fetchMemoList)
     yield put({ type: FETCH_MEMO_LIST_SUCCESS, payload: memos })
   } catch (err) {
-    yield put({ type: FETCH_MEMO_LIST_FAILURE, payload: err })
+    yield put({ type: FETCH_MEMO_LIST_FAILURE, payload: '메모 목록 불러오기에 실패했습니다.' })
   } finally {
     yield put({ type: CLEAR_API_CALL_STATUS })
   }
@@ -61,7 +61,7 @@ function* fetchDeletedMemoList$() {
     const memos = yield call(api.fetchDeletedMemoList)
     yield put({ type: FETCH_DELETED_MEMO_LIST_SUCCESS, payload: memos })
   } catch (err) {
-    yield put({ type: FETCH_MEMO_LIST_FAILURE, payload: err })
+    yield put({ type: FETCH_MEMO_LIST_FAILURE, payload: '삭제된 메모 목록 불러오기에 실패했습니다.' })
   }
 }
 
@@ -73,7 +73,7 @@ function* fetchMemo$(action: FetchMemoAction) {
     const memo = yield call(api.fetchMemo, payload)
     yield put({ type: FETCH_MEMO_SUCCESS, payload: memo })
   } catch (err) {
-    yield put({ type: FETCH_MEMO_FAILURE, payload: err })
+    yield put({ type: FETCH_MEMO_FAILURE, payload: '메모 불러오기에 실패했습니다.' })
   }
 }
 
@@ -85,7 +85,7 @@ function* fetchDeletedMemo$(action: FetchDeletedMemoAction) {
     const memo = yield call(api.fetchMemo, payload)
     yield put({ type: FETCH_DELETED_MEMO_SUCCESS, payload: memo })
   } catch (err) {
-    yield put({ type: FETCH_DELETED_MEMO_FAILURE, payload: err })
+    yield put({ type: FETCH_DELETED_MEMO_FAILURE, payload: '메모 삭제에 실패했습니다.' })
   }
 }
 
@@ -102,7 +102,9 @@ function* addMemo$(action: AddMemoAction) {
     yield call(window.alert, '메모가 생성되었습니다. 메뉴 수정 화면으로 이동합니다.')
     yield put(push(`/memo/${memo.id}`))
   } catch (err) {
-    yield put({ type: ADD_MEMO_FAILURE, paylaod: err })
+    yield put({ type: ADD_MEMO_FAILURE, payload: '메모 추가에 실패했습니다.' })
+  } finally {
+    yield put({ type: CLEAR_API_CALL_STATUS })
   }
 }
 

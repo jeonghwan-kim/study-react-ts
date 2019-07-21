@@ -1,5 +1,6 @@
 import * as types from './types';
 import {Memo} from '../models'
+import { RemoveToastAction } from '../reducers/app';
 
 export interface FetchMemoListRequestAction {
   type: typeof types.FETCH_MEMO_LIST_REQUEST
@@ -66,4 +67,13 @@ export const restoreMemo = (id: number): RestoreMemoAction => ({
   type: types.RESTORE_MEMO_REQUEST,
   payload: id
 })
+
+export const removeToast = (id: number): RemoveToastAction => ({
+  type: types.REMOVE_TOAST,
+  payload: id
+})
   
+export interface ShowMemoAction {
+  type: typeof types.SHOW_TOAST,
+  payload: string
+}
