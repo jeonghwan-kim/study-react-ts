@@ -10,7 +10,8 @@ const Skelton: React.FC<Props> = ({style}) => {
       width: width,
       height: '13px',
       background: '#dddd',
-      marginBottom: '8px'
+      marginBottom: '8px',
+      borderRadius: '2px',
     }}></div>
 
 

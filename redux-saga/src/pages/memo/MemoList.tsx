@@ -26,7 +26,10 @@ const MemoListPage: React.FC<Props> = props => {
         <SidebarTitle>메모</SidebarTitle>
         {hasMemos 
           ? <MemoList {...props} />
-          : apiCalling && <Skelton style={{margin: '10px'}} />}
+          : apiCalling 
+            ? <Skelton style={{margin: '10px'}} />
+            : null
+        }
       </Sidebar>
       <Main>
         <div style={{ margin: '10px' }}>

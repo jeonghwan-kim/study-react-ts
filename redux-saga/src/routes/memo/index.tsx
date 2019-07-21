@@ -10,7 +10,6 @@ const MemoRouter: React.FC<RouteComponentProps> = props => {
     <Switch>
       <Route path={`${match.url}/add`} exact component={AddMemoContainer} />
       <Route path={`${match.url}/:id`} exact component={MemoContainer} />
-      <Route path={`${match.url}/`} exact component={() => <div>메모 없음</div>} />
     </Switch>
   )
 }
