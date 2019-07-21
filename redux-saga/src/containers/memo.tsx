@@ -33,17 +33,8 @@ extends React.Component<Props & RouteComponentProps<MatchProps>, {}> {
     }
   }
   
-  onDeleteMemo = (id: number) => {
-    const {deleteMemo} = this.props;
-    deleteMemo(id)
-  }
-
   render() {
-    return (
-      <MemoPage 
-        {...this.props} 
-        onDeleteMemo={this.onDeleteMemo} />
-    )
+    return <MemoPage {...this.props} />
   }
 }
 

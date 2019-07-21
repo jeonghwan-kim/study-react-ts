@@ -3,21 +3,25 @@ import { Memo } from '../../models';
 import Skelton from '../../components/Skelton';
 import Button from '../../components/Button';
 import DateString from '../../components/DateString';
+import { DeleteMemoAction } from '../../actions';
 
 interface Props {
   memo?: Memo;
   apiCalling: boolean;
-  onDeleteMemo(id: number): void
+  deleteMemo(id: number): DeleteMemoAction
 }
 
 const MemoPage: React.FC<Props> = props => {
-  const { apiCalling, memo, onDeleteMemo } = props;
+  const { apiCalling, memo, deleteMemo } = props;
 
   return (
     <React.Fragment>
       {memo 
         ? <React.Fragment>
-            <Button onClick={() => onDeleteMemo(memo.id!)}>삭제</Button>
+            <Button 
+              disabled={apiCalling}
+              onClick={() => deleteMemo(memo.id!)}
+            >삭제</Button>
             <MemoPageLayout>
               {memo.createdAt && <DateString timestamp={memo.createdAt} />}
               <div>

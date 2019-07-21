@@ -108,19 +108,18 @@ function* deleteMemo$(action: DeleteMemoAction) {
   if (!payload) return;
 
   try {
-    yield call(api.deleteMemo, payload)
-    yield put({
-      type: DELETE_MEMO_SUCCESS,
-      payload: payload
-    })
-
-    // todo
-    history.pushState({}, '', `/memo`)
+    const confirmDelete: boolean = yield call(window.confirm, '이 메모를 삭제할까요?')
+    if (confirmDelete) {
+      yield call(api.deleteMemo, payload)
+      yield put({ type: DELETE_MEMO_SUCCESS, payload: payload })
+      yield put(push('/memo'))
+    }  else {
+      yield put({ type: DELETE_MEMO_FAILURE })
+    }
   } catch (err) {
-    yield put({
-      type: DELETE_MEMO_FAILURE,
-      payload: err
-    })
+    yield put({type: DELETE_MEMO_FAILURE, payload: err})
+  } finally {
+    yield put({ type: CLEAR_API_CALL_STATUS })
   }
 }
 
