@@ -2,9 +2,9 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import { Memo } from '../models';
 import DeletedMemoListPage from '../pages/trash/DeletedMemoList';
-import * as api from '../apis';
 import { Dispatch, bindActionCreators } from 'redux';
-import { fetchDeletedMemoList, FetchDeletedMemoListAction } from '../actions';
+import { fetchDeletedMemoList } from '../actions';
+import { FetchDeletedMemoListAction } from '../reducers/memo';
 import { RootState } from '../reducers';
 import { RouteComponentProps, Redirect } from 'react-router';
 

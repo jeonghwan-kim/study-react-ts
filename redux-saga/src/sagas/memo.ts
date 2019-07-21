@@ -1,4 +1,4 @@
-import { takeLatest, all, call, put, delay } from 'redux-saga/effects'
+import { takeLatest, all, call, put } from 'redux-saga/effects'
 import * as api from '../apis'
 import {
   FETCH_MEMO_LIST_REQUEST,
@@ -29,7 +29,7 @@ import {
   AddMemoAction,
   DeleteMemoAction,
   RestoreMemoAction
-} from '../actions';
+} from '../reducers/memo';
 import { push } from 'connected-react-router';
 
 

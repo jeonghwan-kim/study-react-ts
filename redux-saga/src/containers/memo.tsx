@@ -3,12 +3,10 @@ import {connect} from 'react-redux'
 import { Memo } from '../models';
 import * as api from '../apis';
 import { Dispatch, bindActionCreators } from 'redux';
-import { 
-  FetchMemoAction, fetchMemo, 
-  deleteMemo, DeleteMemoAction
-} from '../actions';
+import { fetchMemo, deleteMemo } from '../actions';
+import {FetchMemoAction, DeleteMemoAction} from '../reducers/memo';
 import { RootState } from '../reducers';
-import { RouteComponentProps, Redirect } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 import MemoPage from '../pages/memo/Memo';
 
 interface MatchProps {

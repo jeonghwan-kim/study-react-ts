@@ -1,7 +1,8 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import { Memo } from '../models';
-import { addMemo, AddMemoAction } from '../actions';
+import { addMemo } from '../actions';
+import { AddMemoAction } from '../reducers/memo';
 import AddMemoPage from '../pages/memo/AddMemo'
 import { Dispatch, bindActionCreators } from 'redux';
 import { RootState } from '../reducers';

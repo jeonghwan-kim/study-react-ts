@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 import { Memo } from '../models';
 import MemoListPage from '../pages/memo/MemoList';
 import { Dispatch, bindActionCreators } from 'redux';
-import { FetchMemoListRequestAction, fetchMemoList } from '../actions';
+import { fetchMemoList } from '../actions';
+import { FetchMemoListAction } from '../reducers/memo'
 import { RootState } from '../reducers';
 import { RouteComponentProps, Redirect } from 'react-router';
 
@@ -14,7 +15,7 @@ interface MatchProps {
 interface Props {
   memos: Memo[]
   apiCalling: boolean
-  fetchMemoList(): FetchMemoListRequestAction
+  fetchMemoList(): FetchMemoListAction
 }
 
 class MemoListContainer 

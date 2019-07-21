@@ -1,9 +1,9 @@
 import * as types from '../actions/types'
 import {
-  FetchMemoListRequestAction, 
+  FetchMemoListAction, 
   AddMemoAction, 
   DeleteMemoAction
-} from '../actions'
+} from './memo'
 import { Toast } from '../models';
 
 export interface AppState {
@@ -20,6 +20,11 @@ export interface ClearApiCallStatusAction {
   type: typeof types.CLEAR_API_CALL_STATUS
 }
 
+export interface ShowToastAction {
+  type: typeof types.SHOW_TOAST,
+  payload: string
+}
+
 export interface AddToastAction {
   type: typeof types.ADD_TOAST,
   payload: Toast
@@ -32,7 +37,7 @@ export interface RemoveToastAction {
 }
 
 type AppActionTypes = ClearApiCallStatusAction
-  | FetchMemoListRequestAction
+  | FetchMemoListAction
   | AddMemoAction
   | DeleteMemoAction
   | AddToastAction

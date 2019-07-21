@@ -5,14 +5,18 @@ import { Dispatch, bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Memo } from '../models';
 import { 
-  fetchMemoList, FetchMemoListRequestAction,
-  fetchDeletedMemoList, FetchDeletedMemoListAction,
-} from '../actions';
+  FetchMemoListAction,
+  FetchDeletedMemoListAction
+} from '../reducers/memo';
+import {
+  fetchMemoList,
+  fetchDeletedMemoList,
+} from '../actions'
 
 interface Props {
   memos: Memo[] 
   deletedMemos: Memo[] 
-  fetchMemoList(): FetchMemoListRequestAction
+  fetchMemoList(): FetchMemoListAction
   fetchDeletedMemoList(): FetchDeletedMemoListAction
 }
 

@@ -1,14 +1,11 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import { Memo } from '../models';
-import * as api from '../apis';
 import { Dispatch, bindActionCreators } from 'redux';
-import { 
-  fetchDeletedMemo, FetchDeletedMemoAction, 
-  restoreMemo, RestoreMemoAction
-} from '../actions';
+import { fetchDeletedMemo, restoreMemo} from '../actions';
+import { FetchDeletedMemoAction, RestoreMemoAction} from '../reducers/memo';
 import { RootState } from '../reducers';
-import { RouteComponentProps, Redirect } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 import DeletedMemo from '../pages/trash/DeletedMemo';
 
 interface MatchProps {
