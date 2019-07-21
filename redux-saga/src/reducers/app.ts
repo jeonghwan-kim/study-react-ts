@@ -1,5 +1,5 @@
 import * as types from '../actions/types'
-import {FetchMemoListRequestAction} from '../actions'
+import {FetchMemoListRequestAction, AddMemoAction} from '../actions'
 
 export interface AppState {
   apiCalling: boolean
@@ -15,10 +15,12 @@ interface ClearApiCallStatusAction {
 
 type AppActionTypes = ClearApiCallStatusAction
   | FetchMemoListRequestAction
+  | AddMemoAction
 
 const appReducer = (state: AppState = initialState, action: AppActionTypes): AppState => {
   switch (action.type) {
     case types.FETCH_MEMO_LIST_REQUEST: 
+    case types.ADD_MEMO_REQUEST: 
       return {
         ...state,
         apiCalling: true

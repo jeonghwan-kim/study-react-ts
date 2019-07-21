@@ -5,16 +5,18 @@ interface ButtonProps {
   to?: string;
   primary?: boolean;
   onClick?(): void;
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = props => {
-  const { to, children, primary, onClick } = props;
+  const { to, children, primary, disabled, onClick } = props;
   const isLink = !!to;
 
   const renderButton = () => {
     return (
       <button 
-        style={buttonStyle(!!primary)} 
+        style={buttonStyle(!!primary, !!disabled)} 
+        disabled={disabled}
         onClick={onClick}
       >{children}</button>
     )
@@ -28,7 +30,7 @@ const Button: React.FC<ButtonProps> = props => {
     return (
       <Link 
         style={{
-          ...buttonStyle(!!primary),
+          ...buttonStyle(!!primary, !!disabled),
           textDecoration: 'none',
         }} 
         to={to}
@@ -39,8 +41,8 @@ const Button: React.FC<ButtonProps> = props => {
   return isLink ? renderLink() : renderButton();
 }
 
-const buttonStyle = (primary: boolean) => {
-  return {
+const buttonStyle = (primary: boolean, disabled: boolean) => {
+  const style: React.CSSProperties = {
     display: 'inline-block',
     border: 'solid 1px #ccc',
     borderColor: primary ? '#2e6da4' : '#ccc',
@@ -52,6 +54,12 @@ const buttonStyle = (primary: boolean) => {
     background: primary ? '#337ab7' : 'transparent',
     color: primary ? '#fff' : 'inherit',
   }
+
+  if (disabled) {
+    style.color = '#ccc'
+  }
+
+  return style;
 }
 
 export default Button;

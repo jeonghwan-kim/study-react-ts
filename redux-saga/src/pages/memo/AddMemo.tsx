@@ -3,7 +3,8 @@ import { Memo } from '../../models';
 import Button from '../../components/Button';
 
 interface Props {
-  onSubmit(memo: Memo): void;
+  apiCalling: boolean;
+  addMemo(memo: Memo): void;
 }
 
 interface State {
@@ -21,15 +22,16 @@ class AddMemoPage extends React.Component<Props, State> {
   }
 
   handleClickSave = () => {
-    const { onSubmit } = this.props;
+    const { addMemo } = this.props;
     const {value} = this.state;
     const content = value.trim();
     if (!content) return;
 
-    onSubmit({ content })
+    addMemo({ content })
   }
 
   render() {
+    const {apiCalling} = this.props;
     const {value} = this.state;
     
     return (
@@ -48,7 +50,10 @@ class AddMemoPage extends React.Component<Props, State> {
             value={value} />
         </form>
         <Button to="/memo">취소</Button>
-        <Button onClick={this.handleClickSave}>저장</Button>
+        <Button 
+          disabled={apiCalling}
+          onClick={this.handleClickSave}
+        >저장</Button>
       </React.Fragment>
     )
   }

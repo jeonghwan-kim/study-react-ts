@@ -23,7 +23,13 @@ import {
   RESTORE_MEMO_FAILURE,
   CLEAR_API_CALL_STATUS
  } from '../actions/types';
-import { FetchMemoAction, FetchDeletedMemoAction, AddMemoAction, DeleteMemoAction, RestoreMemoAction } from '../actions';
+import { 
+  FetchMemoAction, 
+  FetchDeletedMemoAction, 
+  AddMemoAction, 
+  DeleteMemoAction, 
+  RestoreMemoAction 
+} from '../actions';
 import { push } from 'connected-react-router';
 
 function* rootSaga() {
@@ -87,12 +93,13 @@ function* addMemo$(action: AddMemoAction) {
   try {
     const memo = yield call(api.addMemo, payload)
     yield put({ type: ADD_MEMO_SUCCESS, payload: memo })
+    yield put({ type: CLEAR_API_CALL_STATUS })
+
+    // TODO 토스트로 변경 
+    yield call(window.alert, '메모가 생성되었습니다. 메뉴 수정 화면으로 이동합니다.')
     yield put(push(`/memo/${memo.id}`))
   } catch (err) {
-    yield put({
-      type: ADD_MEMO_FAILURE,
-      paylaod: err
-    })
+    yield put({ type: ADD_MEMO_FAILURE, paylaod: err })
   }
 }
 
