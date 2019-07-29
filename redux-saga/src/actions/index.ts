@@ -1,6 +1,6 @@
 import * as types from './types';
-import {Memo} from '../models'
-import { RemoveToastAction } from '../reducers/app';
+import {Memo, Dialog} from '../models'
+import { RemoveToastAction, ShowDialolgAction, ConfirmDialogAction, CancelDialogAction } from '../reducers/app';
 import { 
   FetchMemoListAction, 
   FetchDeletedMemoListAction,
@@ -48,4 +48,17 @@ export const restoreMemo = (id: number): RestoreMemoAction => ({
 export const removeToast = (id: number): RemoveToastAction => ({
   type: types.REMOVE_TOAST,
   payload: id
+})
+
+export const showDialog = (dialog: Dialog): ShowDialolgAction => ({
+  type: types.SHOW_DIALOG,
+  payload: dialog
+})
+
+export const confirmDialog = (): ConfirmDialogAction => ({
+  type: types.CONFIRM_DIALOG,
+})
+
+export const cancelDialog = (): CancelDialogAction => ({
+  type: types.CANCEL_DIALOG,
 })

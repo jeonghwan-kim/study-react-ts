@@ -32,3 +32,7 @@ export const CLEAR_API_CALL_STATUS = 'CLEAR_API_CALL_STATUS'
 export const SHOW_TOAST = 'SHOW_TOAST'
 export const ADD_TOAST = 'ADD_TOAST'
 export const REMOVE_TOAST = 'REMOVE_TOAST'
+
+export const SHOW_DIALOG = 'SHOW_DIALOG'
+export const CONFIRM_DIALOG = 'CONFIRM_DIALOG'
+export const CANCEL_DIALOG = 'CANCEL_DIALOG'

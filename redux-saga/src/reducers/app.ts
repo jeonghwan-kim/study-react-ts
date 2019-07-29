@@ -4,16 +4,18 @@ import {
   AddMemoAction, 
   DeleteMemoAction
 } from './memo'
-import { Toast } from '../models';
+import { Toast, Dialog } from '../models';
 
 export interface AppState {
   apiCalling: boolean,
   toasts: Toast[],
+  dialog?: Dialog,
 }
 
 const initialState: AppState = {
   apiCalling: false,
   toasts: [],
+  dialog: undefined
 }
 
 export interface ClearApiCallStatusAction {
@@ -30,11 +32,24 @@ export interface AddToastAction {
   payload: Toast
 }
 
-// 액션은 인터페이스는 모두 리듀서에서 정의? 
 export interface RemoveToastAction {
   type: typeof types.REMOVE_TOAST,
   payload: number
 }
+
+export interface ShowDialolgAction {
+  type: typeof types.SHOW_DIALOG,
+  payload: Dialog
+}
+
+export interface ConfirmDialogAction {
+  type: typeof types.CONFIRM_DIALOG
+}
+
+export interface CancelDialogAction {
+  type: typeof types.CANCEL_DIALOG
+}
+
 
 type AppActionTypes = ClearApiCallStatusAction
   | FetchMemoListAction
@@ -42,6 +57,9 @@ type AppActionTypes = ClearApiCallStatusAction
   | DeleteMemoAction
   | AddToastAction
   | RemoveToastAction
+  | ShowDialolgAction
+  | ConfirmDialogAction
+  | CancelDialogAction
 
 const appReducer = (state: AppState = initialState, action: AppActionTypes): AppState => {
   switch (action.type) {
@@ -67,6 +85,17 @@ const appReducer = (state: AppState = initialState, action: AppActionTypes): App
       return {
         ...state,
         toasts: state.toasts.filter(toast => toast.id !== toastId)
+      }
+    case types.SHOW_DIALOG: 
+      return {
+        ...state,
+        dialog: action.payload
+      }
+    case types.CONFIRM_DIALOG:
+    case types.CANCEL_DIALOG:
+      return {
+        ...state,
+        dialog: undefined
       }
     default: 
       return state

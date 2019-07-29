@@ -12,19 +12,7 @@ interface Props {
   addMemo(memos: Memo): AddMemoAction
 }
 
-interface State {
-}
-
-class AddMemoContainer extends React.Component<Props, State> {
-  readonly state = {
-    newMemoId: 0
-  }
-
-  handleSubmit = (memo: Memo) => {
-    const {addMemo} = this.props;
-    addMemo(memo)
-  }
-
+class AddMemoContainer extends React.Component<Props> {
   render() {
     return <AddMemoPage {...this.props} />
   }

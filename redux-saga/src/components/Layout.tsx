@@ -1,5 +1,6 @@
 import * as React from 'react';
-import ToastList from '../containers/ToastList'
+import ToastListContainer from '../containers/ToastList'
+import DialogContainer from '../containers/Dialog'
 
 const style: React.CSSProperties = {
   display: 'flex',
@@ -10,7 +11,8 @@ const style: React.CSSProperties = {
 const Layout: React.FC = (props) => {
   return (
     <React.Fragment>
-      <ToastList />
+      <ToastListContainer />
+      <DialogContainer />
       <div style={style}>
         {props.children}
       </div>

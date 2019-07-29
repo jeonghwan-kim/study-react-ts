@@ -1,4 +1,4 @@
-import { takeLatest, all, call, put } from 'redux-saga/effects'
+import { takeLatest, all, call, put, take } from 'redux-saga/effects'
 import * as api from '../apis'
 import {
   FETCH_MEMO_LIST_REQUEST,
@@ -22,6 +22,8 @@ import {
   RESTORE_MEMO_SUCCESS,
   RESTORE_MEMO_FAILURE,
   CLEAR_API_CALL_STATUS,
+  SHOW_DIALOG,
+  CONFIRM_DIALOG,
 } from '../actions/types';
 import {
   FetchMemoAction,
@@ -47,6 +49,7 @@ export default function* memoSaga() {
 
 function* fetchMemoList$() {
   try {
+    // throw Error()
     const memos = yield call(api.fetchMemoList)
     yield put({ type: FETCH_MEMO_LIST_SUCCESS, payload: memos })
   } catch (err) {
@@ -58,6 +61,7 @@ function* fetchMemoList$() {
 
 function* fetchDeletedMemoList$() {
   try {
+    // throw Error()
     const memos = yield call(api.fetchDeletedMemoList)
     yield put({ type: FETCH_DELETED_MEMO_LIST_SUCCESS, payload: memos })
   } catch (err) {
@@ -94,12 +98,15 @@ function* addMemo$(action: AddMemoAction) {
   if (!payload) return;
 
   try {
+    // throw Error();
     const memo = yield call(api.addMemo, payload)
     yield put({ type: ADD_MEMO_SUCCESS, payload: memo })
-    yield put({ type: CLEAR_API_CALL_STATUS })
+    yield put({ type: SHOW_DIALOG, payload: {
+      type: 'alert',
+      text: '메모가 생성되었습니다. 메뉴 수정 화면으로 이동합니다.'
+    }})
+    yield take(CONFIRM_DIALOG)
 
-    // TODO 토스트로 변경 
-    yield call(window.alert, '메모가 생성되었습니다. 메뉴 수정 화면으로 이동합니다.')
     yield put(push(`/memo/${memo.id}`))
   } catch (err) {
     yield put({ type: ADD_MEMO_FAILURE, payload: '메모 추가에 실패했습니다.' })
